@@ -33,10 +33,10 @@ public class EventProducer<T extends PojaEvent> implements Consumer<Collection<T
   private final ListGrouper<T> listGrouper;
 
   public EventProducer(
-          ObjectMapper om,
-          EventBridgeClient eventBridgeClient,
-          @Value("${aws.eventBridge.bus}") String eventBusName,
-          ListGrouper<T> listGrouper) {
+      ObjectMapper om,
+      EventBridgeClient eventBridgeClient,
+      @Value("${aws.eventBridge.bus}") String eventBusName,
+      ListGrouper<T> listGrouper) {
     this.om = om;
     this.eventBridgeClient = eventBridgeClient;
     this.listGrouper = listGrouper;
@@ -54,19 +54,19 @@ public class EventProducer<T extends PojaEvent> implements Consumer<Collection<T
 
   private PutEventsRequest toEventsRequest(List<T> events) {
     return PutEventsRequest.builder()
-            .entries(events.stream().map(this::toRequestEntry).toList())
-            .build();
+        .entries(events.stream().map(this::toRequestEntry).toList())
+        .build();
   }
 
   private PutEventsRequestEntry toRequestEntry(PojaEvent event) {
     try {
       String eventAsString = om.writeValueAsString(event);
       return PutEventsRequestEntry.builder()
-              .source(event.getEventSource())
-              .detailType(event.getClass().getTypeName())
-              .detail(eventAsString)
-              .eventBusName(this.eventBusName)
-              .build();
+          .source(event.getEventSource())
+          .detailType(event.getClass().getTypeName())
+          .detail(eventAsString)
+          .eventBusName(this.eventBusName)
+          .build();
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
