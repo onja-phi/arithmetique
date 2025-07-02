@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloWorldController {
   private final HelloWorldService service;
 
-  @GetMapping("/hello")
+  @GetMapping("/hi")
   public String helloWorld(@RequestParam String name) {
     return service.uploadHelloWorldMessage(name);
   }
