@@ -1,6 +1,5 @@
 package com.example.demo.endpoint.rest.controller;
 
-// import com.my.company.endpoint.event.EventProducer;
 import com.example.demo.endpoint.event.EventProducer;
 import com.example.demo.endpoint.event.model.SendEmailRequested;
 import java.util.List;
